@@ -6,9 +6,9 @@
 [![follow on twitter](https://img.shields.io/twitter/follow/SilasKieser.svg?style=social&label=Follow)](https://twitter.com/search?f=tweets&q=%40SilasKieser%20%23metagenomeAtlas&src=typd)
 
 
-Metagenome-atlas is a easy-to-use metagenomic pipeline based on snakemake. It handles all steps from QC, Assembly, Binning, to Annotation.
+MAGs_IBD is a easy-to-use metagenomic pipeline based on snakemake. It handles all steps from QC, Assembly, Binning, to Annotation.
 
-![scheme of workflow](resources/images/atlas_list.png?raw=true)
+![scheme of workflow]
 
 You can start using atlas with three commands:
 ```
@@ -17,24 +17,6 @@ You can start using atlas with three commands:
     atlas run all
 ```
 where `{latest_version}` should be replaced by [![Version](https://anaconda.org/bioconda/metagenome-atlas/badges/version.svg)](https://anaconda.org/bioconda/metagenome-atlas)
-
-
-# Webpage
-
-[metagenome-atlas.github.io](https://metagenome-atlas.github.io/)
-
-# Documentation
-
-https://metagenome-atlas.readthedocs.io/
-
-[Tutorial](https://github.com/metagenome-atlas/Tutorial)
-
-# Citation
-
-> ATLAS: a Snakemake workflow for assembly, annotation, and genomic binning of metagenome sequence data.  
-> Kieser, S., Brown, J., Zdobnov, E. M., Trajkovski, M. & McCue, L. A.   
-> BMC Bioinformatics 21, 257 (2020).  
-> doi: [10.1186/s12859-020-03585-4](https://doi.org/10.1186/s12859-020-03585-4)
 
 
 # Developpment/Extensions
