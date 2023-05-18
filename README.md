@@ -1,4 +1,4 @@
-# Metagenome-Atlas
+# MAGs_IBD
 
 [![Anaconda-Server Badge](https://anaconda.org/bioconda/metagenome-atlas/badges/latest_release_relative_date.svg)](https://anaconda.org/bioconda/metagenome-atlas)
 [![Bioconda](https://img.shields.io/conda/dn/bioconda/metagenome-atlas.svg?label=Bioconda )](https://anaconda.org/bioconda/metagenome-atlas)
