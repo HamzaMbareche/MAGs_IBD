@@ -33,15 +33,22 @@ localrules:
     combine_contigs,
 
 
+def cobining_input(wildcards):
+
+    all_samples_of_group list(sampleTable.loc[sampleTable.BinGroup == wildcard.bin_group].index)
+    #TODO: additional checks of size
+    Continue_here
+    return expand(rules.filter_contigs.output[0], sample=all_samples_of_group)
+
 rule combine_contigs:
     input:
         #Trigers rerun if contigs change
         flag=expand("{sample}/{sample}_contigs.fasta", sample=SAMPLES),
-        fasta=ancient(expand(rules.filter_contigs.output[0], sample=SAMPLES)),
+        fasta=ancient(cobining_input),
     output:
-        "Cobinning/combined_contigs.fasta.gz",
+        "Intermediate/cobinning/{bin_group}/combined_contigs.fasta.gz",
     log:
-        "logs/cobinning/combine_contigs.log",
+        "logs/cobinning/combine_contigs_{bin_group}.log",
     params:
         seperator=config["cobinning_separator"],
         samples=SAMPLES,
@@ -64,14 +71,14 @@ rule minimap_index:
     input:
         contigs=rules.combine_contigs.output,
     output:
-        mmi=temp("Cobinning/combined_contigs.mmi"),
+        mmi=temp("Intermediate/cobinning/{bin_group}/combined_contigs.mmi"),
     params:
         index_size="12G",
     resources:
         mem=config["mem"],  # limited num of fatnodes (>200g)
     threads: 3
     log:
-        "logs/cobinning/vamb/index.log",
+        "logs/cobinning/{bin_group}/index_contigs.log",
     benchmark:
         "logs/benchmarks/cobinning/mminimap_index.tsv"
     conda:
@@ -84,24 +91,24 @@ rule samtools_dict:
     input:
         contigs=rules.combine_contigs.output,
     output:
-        dict="Cobinning/combined_contigs.dict",
+        dict="Intermediate/cobinning/{bin_group}/combined_contigs.dict",
     resources:
         mem=config["simplejob_mem"],
         ttime=config["runtime"]["simplejob"],
     threads: 1
     log:
-        "logs/cobinning/samtools_dict.log",
+        "logs/cobinning/{bin_group}/samtools_dict.log",
     conda:
         "../envs/minimap.yaml"
     shell:
         "samtools dict {input} | cut -f1-3 > {output} 2> {log}"
 
-
+#TODO add bingroup from here
 rule minimap:
     input:
         fq=get_quality_controlled_reads,
-        mmi="Cobinning/combined_contigs.mmi",
-        dict="Cobinning/combined_contigs.dict",
+        mmi= rules.minimap_index.output,
+        dict= rules.samtools_dict.output,
     output:
         bam=temp("Cobinning/mapping/{sample}.unsorted.bam"),
     threads: config["threads"]
