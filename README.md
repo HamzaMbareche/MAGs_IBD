@@ -8,8 +8,6 @@
 
 MAGs_IBD is a easy-to-use metagenomic pipeline based on snakemake. It handles all steps from QC, Assembly, Binning, to Annotation.
 
-![scheme of workflow]
-
 You can start using atlas with three commands:
 ```
     mamba install -y -c bioconda -c conda-forge metagenome-atlas={latest_version}
